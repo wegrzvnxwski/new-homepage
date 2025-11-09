@@ -1,0 +1,221 @@
+<!-- custom home page made by wegrzvnxwski-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>search://</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #0d0d0d; /* uncomment and delete this text if you want to have just plain color background */
+      background: 
+      linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), /* you can change the 0.7 values to make background darker or lighter, higher the number the less transparent it gets */
+      url('wallpaper.png') no-repeat center center fixed; /* change 'wallpaper.png' to your default wallpaper path or url. I uploaded an example as well, remember to keep this file and the wallpaper in one folder for best experience */
+      background-size: cover; /* delete or comment lines 12-15 to disable default background pic */
+      margin: 0;
+      font-family: 'Fira Code', monospace;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #71f779;
+      margin: 0 0 10px 0;
+    }
+
+    .time {
+      font-size: 6rem;
+      margin: 0 0 20px 0;
+      color: #ffffff;
+    }
+
+    .links {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 50px;
+}
+
+.links a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #ffffff;
+  font-family: 'Fira Code', monospace;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.links img {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  filter: drop-shadow(0 0 0px #333);
+}
+
+    a {
+      color: #71f779;
+      text-decoration: none;
+      display: block;
+      margin-top: 25px;
+    }
+
+.favlink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #d5faff;
+  font-family: 'Fira Code', monospace;
+  transition: 0.2s ease;
+}
+
+.favlink img {
+  width: 36px;
+  height: auto;
+  padding: 6px;
+  margin-bottom: 6px;
+  background: #15151500;
+  border: 1px solid #444;
+  border-radius: 8px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="time" id="time"></div>
+
+  <!-- edit those to your liking, you can store favicons locally or get those from websites-->
+  <div class="links">
+  <a href="yoursite1" class="favlink">
+    <img src="yoursiteicon1" alt="1" />
+     your site 1
+  </a>
+  <a href="yoursite2" class="favlink">
+    <img src="yoursiteicon2" alt="2" />
+    your site 2
+  </a>
+  <a href="yoursite3" class="favlink">
+    <img src="yoursiteicon3" alt="3" />
+    your site 3
+  </a>
+  <a href="yoursite4" class="favlink">
+    <img src="yoursiteicon4" alt="4" />
+    your site 4
+  </a>
+  <a href="yoursite5" class="favlink">
+    <img src="yoursiteicon5" alt="5" />
+    your site 5
+  </a>
+  <a href="yoursite6" class="favlink">
+    <img src="yoursiteicon6" alt="6">
+    your site 6
+  </a>
+  <a href="yoursite7" class="favlink">
+    <img src="https://cdn-icons-png.flaticon.com/512/16009/16009673.png" alt="7"> <!-- I used an external image, since the site that was here before doesn't have a favicon. of course you can modify it -->
+    your site 7
+  </a>
+  <a href="yoursite8" class="favlink">
+    <img src="yoursiteicon8" alt="8" />
+    your site 8
+  </a>
+    <a href="yoursite9" class="favlink">
+    <img src="yoursiteicon9" alt="9">
+    your site 9
+</a>
+<!-- you can add more if you want to -->
+</div>
+
+  <a href="https://start.duckduckgo.com">search:// wake the gods</a>
+
+ <input type="file" id="uploadWallpaper" accept="image/*" style="display: none;">
+ <div id="wallpaperMenu" style="position: fixed; top: 20px; right: 20px; font-size: 20px; color: #666; cursor: pointer; z-index: 9999; user-select: none;">⚙</div>
+
+  <script>
+    const timeEle = document.getElementById('time');
+    const updateClock = () => {
+      const now = new Date();
+      const options = { hour: '2-digit', minute: '2-digit' };
+      timeEle.textContent = now.toLocaleTimeString('pl-PL', options); // change 'pl-PL' to your locale if needed, examples you might wanna use: 'en-US', 'de-DE', 'fr-FR'
+    };
+    updateClock();
+    setInterval(updateClock, 60000);
+
+    const wallpaperDefaults = [
+    'wallpaper.png',
+    'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+    'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d'
+];
+
+let customWallpaper = localStorage.getItem('customWallpaper');
+let currentIndex = parseInt(localStorage.getItem('wallIndex')) || 0;
+
+function getAllWallpapers() {
+    const list = [...wallpaperDefaults];
+    if (customWallpaper) list.push(customWallpaper);
+    return list;
+}
+
+function setWallpaper(index) {
+    const wallpapers = getAllWallpapers();
+    const image = wallpapers[index];
+    document.body.style.backgroundImage = `
+      linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+      url('${image}')
+    `; //if your wallpaper is still too bright, increase the rgba values
+    localStorage.setItem('wallIndex', index);
+}
+
+function applyCustomWallpaper(dataURL) {
+    localStorage.setItem('customWallpaper', dataURL);
+    customWallpaper = dataURL;
+    currentIndex = getAllWallpapers().length - 1;
+    setWallpaper(currentIndex);
+}
+
+function removeCustomWallpaper() {
+    localStorage.removeItem('customWallpaper');
+    customWallpaper = null;
+    currentIndex = 0;
+    setWallpaper(currentIndex);
+}
+
+// menu stuff
+document.getElementById('wallpaperMenu').addEventListener('click', () => {
+    const choice = prompt(
+        "Wallpaper options:\n1 – Change back to default\n2 – Upload new wallpaper\n3 – Remove custom wallpaper",
+    );
+    if (choice === "1") {
+        currentIndex = (currentIndex + 1) % getAllWallpapers().length;
+        setWallpaper(currentIndex);
+    } else if (choice === "2") {
+        document.getElementById('uploadWallpaper').click();
+    } else if (choice === "3") {
+        removeCustomWallpaper();
+    }
+});
+
+// loading that bad boi
+document.getElementById('uploadWallpaper').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = evt => applyCustomWallpaper(evt.target.result);
+        reader.readAsDataURL(file);
+    }
+});
+
+setWallpaper(currentIndex);
+  </script>
+</body>
+</html>
